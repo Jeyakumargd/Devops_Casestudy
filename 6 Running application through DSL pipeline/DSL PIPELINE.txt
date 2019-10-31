@@ -1,0 +1,17 @@
+node {
+    def app
+
+    stage('Pull image') {
+        docker.withRegistry('', 'doc_hub' ) {
+            sh 'docker pull dhfirststep/nodejs_firststep:nodejspackage-5'
+            
+        }
+    }
+	
+	    stage('deploy application') {
+        docker.withRegistry('', 'doc_hub' ) {
+            sh 'docker run   -u root   --rm   -d   -p 8081:8081   dhfirststep/nodejs_firststep:nodejspackage-4'
+            
+        }
+    }
+}

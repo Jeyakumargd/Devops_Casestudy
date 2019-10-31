@@ -1,0 +1,19 @@
+{
+  "name": "Hellonodejs",
+  "version": "1.0.0",
+  "description": "Nodejs is up and running",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeyakumargd/hw_nodejs.git/"
+  },
+  "keywords": [
+    "node",
+    "docker",
+    "dockerfile"
+  ]
+}

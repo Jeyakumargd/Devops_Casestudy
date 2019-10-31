@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo ""
+echo " List of kube naespaces -- NOT RUNNING "
+kubectl get pods --all-namespaces | awk -F" " '{ print $1,$2,$4 }'  | grep -v "Running"
+echo ""
+echo ""
+echo ""
+
+echo " List of kube naespaces -- RUNNING "
+kubectl get pods --all-namespaces | awk -F" " '{ print $1,$2,$4 }'  | grep  "Running"

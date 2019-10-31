@@ -1,0 +1,80 @@
+jenkinskube@jenkinskube:~$ helm install --name jenkinshelm --namespace jenkins stable/jenkins
+NAME:   jenkinshelm
+LAST DEPLOYED: Wed Oct 30 17:03:53 2019
+NAMESPACE: jenkins
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/ConfigMap
+NAME               DATA  AGE
+jenkinshelm        5     9s
+jenkinshelm-tests  1     9s
+
+==> v1/Deployment
+NAME         READY  UP-TO-DATE  AVAILABLE  AGE
+jenkinshelm  0/1    1           0          6s
+
+==> v1/PersistentVolumeClaim
+NAME         STATUS  VOLUME                                    CAPACITY  ACCESS MODES  STORAGECLASS  AGE
+jenkinshelm  Bound   pvc-7a179c3d-3bc6-44fa-80f2-56a328aca99d  8Gi       RWO           standard      9s  Filesystem
+
+==> v1/Pod(related)
+NAME                         READY  STATUS    RESTARTS  AGE
+jenkinshelm-947c796bc-792dq  0/1    Init:0/1  0         6s
+
+==> v1/Role
+NAME                         AGE
+jenkinshelm-schedule-agents  9s
+
+==> v1/RoleBinding
+NAME                         AGE
+jenkinshelm-schedule-agents  8s
+
+==> v1/Secret
+NAME         TYPE    DATA  AGE
+jenkinshelm  Opaque  2     9s
+
+==> v1/Service
+NAME               TYPE          CLUSTER-IP      EXTERNAL-IP  PORT(S)         AGE
+jenkinshelm        LoadBalancer  10.111.208.122  <pending>    8080:31392/TCP  7s
+jenkinshelm-agent  ClusterIP     10.99.39.242    <none>       50000/TCP       7s
+
+==> v1/ServiceAccount
+NAME         SECRETS  AGE
+jenkinshelm  1        9s
+
+
+NOTES:
+1. Get your 'admin' user password by running:
+  printf $(kubectl get secret --namespace jenkins jenkinshelm -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+2. Get the Jenkins URL to visit by running these commands in the same shell:
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        You can watch the status of by running 'kubectl get svc --namespace jenkins -w jenkinshelm'
+  export SERVICE_IP=$(kubectl get svc --namespace jenkins jenkinshelm --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+  echo http://$SERVICE_IP:8080/login
+
+3. Login with the password from step 1 and the username: admin
+
+
+For more information on running Jenkins on Kubernetes, visit:
+https://cloud.google.com/solutions/jenkins-on-container-engine
+
+jenkinskube@jenkinskube:~$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   26m
+jenkinskube@jenkinskube:~$ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+minikube   Ready    master   27m   v1.16.2
+jenkinskube@jenkinskube:~$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                               READY   STATUS     RESTARTS   AGE
+jenkins       jenkinshelm-947c796bc-792dq        1/1     Running   0          5m45s
+kube-system   coredns-5644d7b6d9-2x2mc           1/1     Running    0          27m
+kube-system   coredns-5644d7b6d9-7m2q6           1/1     Running    0          27m
+kube-system   etcd-minikube                      1/1     Running    0          26m
+kube-system   kube-addon-manager-minikube        1/1     Running    0          26m
+kube-system   kube-apiserver-minikube            1/1     Running    0          26m
+kube-system   kube-controller-manager-minikube   1/1     Running    0          27m
+kube-system   kube-proxy-6b8xs                   1/1     Running    0          27m
+kube-system   kube-scheduler-minikube            1/1     Running    0          27m
+kube-system   storage-provisioner                1/1     Running    0          27m
+kube-system   tiller-deploy-684c9f98f5-ltnp9     1/1     Running    0          12m

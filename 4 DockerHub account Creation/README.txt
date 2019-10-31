@@ -1,0 +1,1 @@
+Dockerhub account has been created to store the images built during the CI phase of jenkins
